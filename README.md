@@ -17,5 +17,4 @@ To run this project locally, follow these steps:
 
 Clone the repository:
 
-Bash
-git clone https://github.com/YourUsername/Geoplanet.git
+[clone](https://github.com/Sai-Sri-Krishna/Geoplanet.git)
