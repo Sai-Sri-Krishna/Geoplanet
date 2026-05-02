@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" sizes="32x32" href="nasapics/Screenshot 2026-05-01 204517.png">
+    <link rel="icon" sizes="32x32" href="Screenshot 2026-05-01 204517.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GeoPlanet</title>
@@ -27,7 +27,7 @@ height: min(90vw, 600px);
   border-radius: 50%;
   z-index: 0;
 
-  background: url('nasapics/eartt.png') repeat-x;
+  background: url('eartt.png') repeat-x;
   background-size: cover;
 
   box-shadow:
@@ -135,19 +135,16 @@ button:active {
   background: #444;
   color: #fff;
 }
-.output {
-  animation: floatIn 0.4s ease;
-}
+#captureArea {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 
-@keyframes floatIn {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  padding: 12px;
+  background: #000;
+  border-radius: 16px;
+
+  box-shadow: 0 0 20px rgba(30,144,255,0.3);
 }
 .clear:hover {
   background: #666;
@@ -157,7 +154,7 @@ button:active {
   height: clamp(30px, 8vw, 90px);
   margin: 3px;
 
-  border-radius: 5px;               /* smooth corners */
+  border-radius: 5px;        
   object-fit: cover;
 
   transition: 
@@ -167,18 +164,15 @@ button:active {
 
   box-shadow: 0 4px 10px rgba(0,0,0,0.4);
 }
-.output img:hover {
+    .output img:hover {
   transform: translateY(-6px) scale(1.08);
   box-shadow: 0 12px 25px rgba(30,144,255,0.5);
-  
   filter: brightness(1.1);
 }
-
-@keyframes reveal {
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-    filter: blur(0);
+    @media (max-width: 600px) {
+  .output img {
+    width: clamp(45px, 12vw, 80px);
+    height: clamp(45px, 12vw, 80px);
   }
 }
 @keyframes pop{to{transform:scale(1)}}
@@ -186,6 +180,10 @@ button:active {
 .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;padding:40px 16px}
 .card{background:rgba(255,255,255,.05);padding:20px;border-radius:14px}
 .footer{text-align:center;padding:20px;opacity:.6;font-size:15px;color:#ffffff;}
+    .output img:active {
+  transform: scale(0.95);
+  box-shadow: 0 6px 15px rgba(30,144,255,0.4);
+}
 </style>
 </head>
 <body>
@@ -206,13 +204,12 @@ button:active {
 
     <div class="input-wrap">
       <input id="textInput" placeholder="Enter your name / 2026" maxlength="25"/>
-      
       <button class="generate" onclick="generate()">Generate</button>
-<button class="clear" onclick="clearAll()">Clear</button>
+        <button class="clear" onclick="clearAll()">Clear</button>
     </div>
 
     <div id="output" class="output"></div>
-
+    <div id="captureArea"></div>
     <div style="margin-top:10px">
       <button class="download" id="downloadBtn" onclick="downloadImage()">Download</button>
       <button class="share" id="shareBtn" onclick="shareImage()">Share</button>
@@ -227,35 +224,35 @@ button:active {
 
 <script>
 const map={
-  A:["nasapics/a-0.png","nasapics/a-1.png","nasapics/a-2.png","nasapics/a-3.png"],
-  B:["nasapics/b-1.png"],
-  C:["nasapics/c-2.png"],
-  D:["nasapics/d-0.png","nasapics/d-1.png"],
-  E:["nasapics/e-1.png","nasapics/e-0.png","nasapics/e-2.png"],
-  F:["nasapics/f-1.png"],
-  G:["nasapics/g-0.png"],
-  H:["nasapics/h-0.png"],
-  I:["nasapics/i-0.png","nasapics/i-1.png","nasapics/i-2.png"],
-  J:["nasapics/j-0.png","nasapics/j-1.png","nasapics/j-2.png"],
-  K:["nasapics/k-0.png","nasapics/k-1.png"],
-  L:["nasapics/l-0.png"],
-  M:["nasapics/m-1.png","nasapics/m-2.png"],
-  N:["nasapics/n-0.png","nasapics/n-1.png"],
-  O:["nasapics/o-0.png","nasapics/o-1.png"],
-  P:["nasapics/p-0.png","nasapics/p-1.png"],
-  Q:["nasapics/q-0.png"],
-  R:["nasapics/r-0.png","nasapics/r-1.png","nasapics/r-2.png"],
-  S:["nasapics/s-0.png","nasapics/s-1.png"],
-  T:["nasapics/t-0.png"],
-  U:["nasapics/u-0.png"],
-  V:["nasapics/v-0.png","nasapics/v-1.png","nasapics/v-2.png"],
-  W:["nasapics/w-0.png","nasapics/w-1.png"],
-  X:["nasapics/x-0.png","nasapics/x-1.png"],
-  Y:["nasapics/y-0.png","nasapics/y-1.png","nasapics/y-2.png"],
-  Z:["nasapics/z.png"],
-  0:["nasapics/0.png"],1:["nasapics/1.png"],2:["nasapics/2.png"],3:["nasapics/3.png"],
-  4:["nasapics/4.png"],5:["nasapics/5.png"],6:["nasapics/6.png"],7:["nasapics/7.png"],
-  8:["nasapics/8.png"],9:["nasapics/9.png"]
+  A:["a-0.png","a-1.png","a-2.png","a-3.png"],
+  B:["b-1.png"],
+  C:["c-2.png"],
+  D:["d-0.png","d-1.png"],
+  E:["e-1.png","e-0.png","e-2.png"],
+  F:["f-1.png"],
+  G:["g-0.png"],
+  H:["h-0.png"],
+  I:["i-0.png","i-1.png","i-2.png"],
+  J:["j-0.png","j-1.png","j-2.png"],
+  K:["k-0.png","k-1.png"],
+  L:["l-0.png"],
+  M:["m-1.png","m-2.png"],
+  N:["n-0.png","n-1.png"],
+  O:["o-0.png","o-1.png"],
+  P:["p-0.png","p-1.png"],
+  Q:["q-0.png"],
+  R:["r-0.png","r-1.png","r-2.png"],
+  S:["s-0.png","s-1.png"],
+  T:["t-0.png"],
+  U:["u-0.png"],
+  V:["v-0.png","v-1.png","v-2.png"],
+  W:["w-0.png","w-1.png"],
+  X:["x-0.png","x-1.png"],
+  Y:["y-0.png","y-1.png","y-2.png"],
+  Z:["z.png"],
+  0:["0.png"],1:["1.png"],2:["2.png"],3:["3.png"],
+  4:["4.png"],5:["5.png"],6:["6.png"],7:["7.png"],
+  8:["8.png"],9:["9.png"]
 };
 
 
@@ -290,63 +287,6 @@ function rand(arr){
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-function render(input){
-  const out = document.getElementById("output");
-  out.innerHTML = '';
-
-  const length = input.length;
-
-  // 🎯 dynamic sizing logic
-  let size;
-  if (length <= 4) size = 90;
-  else if (length <= 8) size = 70;
-  else if (length <= 15) size = 55;
-  else size = 40;
-
-  // apply size as CSS variable
-  out.style.setProperty('--img-size', size + 'px');
-
-  input.split("").forEach((c, i) => {
-    if (c === " ") {
-      const spacer = document.createElement("div");
-      spacer.style.width = "15px";
-      out.appendChild(spacer);
-      return;
-    }
-
-    if (map[c]) {
-      const img = document.createElement("img");
-      img.src = rand(map[c]);
-
-      // stagger animation delay (wave effect 🌊)
-      img.style.animationDelay = `${i * 0.12}s`;
-
-      img.onerror = () => img.remove();
-      out.appendChild(img);
-    }
-  });
-}
-
-function generate(){
-  const input = document.getElementById("textInput").value.trim().toUpperCase();
-  if(!input) return;
-
-  const out = document.getElementById("output");
-
-  // loading pulse
-  out.innerHTML = "<p style='opacity:0.6'>Generating...</p>";
-
-  setTimeout(()=>{
-    render(input);
-
-    requestAnimationFrame(() => {
-      out.scrollLeft = (out.scrollWidth - out.clientWidth) / 2;
-    });
-
-    toggleBtns(true);
-    updateURL(input);
-  }, 300);
-}
 function clearAll(){
   document.getElementById("textInput").value = "";
   document.getElementById("output").innerHTML = "";
@@ -358,6 +298,76 @@ function clearAll(){
   url.searchParams.delete("q");
   history.replaceState(null, "", url);
 }
+function render(input){
+  const out = document.getElementById("captureArea");
+  out.innerHTML = '';
+
+  const length = input.length;
+
+  // 🎯 dynamic sizing
+  let size;
+  if (window.innerWidth < 600) {
+    // mobile sizes
+    if (length <= 4) size = 80;
+    else if (length <= 8) size = 65;
+    else if (length <= 15) size = 50;
+    else size = 40;
+  } else {
+    // desktop sizes
+    if (length <= 4) size = 90;
+    else if (length <= 8) size = 70;
+    else if (length <= 15) size = 55;
+    else size = 45;
+  }
+
+  input.split("").forEach((c,i)=>{
+    if(c === " "){
+      const spacer = document.createElement("div");
+      spacer.style.width = "15px";
+      out.appendChild(spacer);
+      return;
+    }
+
+    if(map[c]){
+      const img = document.createElement("img");
+      img.src = rand(map[c]);
+
+      img.style.width = size + "px";
+      img.style.height = size + "px";
+
+      img.style.animationDelay = `${i * 0.1}s`;
+
+      img.onerror = () => img.remove();
+      out.appendChild(img);
+    }
+  });
+}
+
+function generate(){
+  const input=document.getElementById("textInput").value.trim().toUpperCase();
+
+  if(!input) return;
+
+  if(input.length > 25){
+    alert("Max 25 characters allowed 🚫");
+    return;
+  }
+
+  const out = document.getElementById("output");
+  out.innerHTML = "<p style='opacity:0.6'>Generating...</p>";
+
+  setTimeout(()=>{
+    render(input);
+
+    requestAnimationFrame(() => {
+      out.scrollLeft = (out.scrollWidth - out.clientWidth) / 2;
+    });
+
+    toggleBtns(true);
+    updateURL(input);
+  }, 200);
+}
+
 
 function toggleBtns(show){
   ["downloadBtn","shareBtn","copyBtn"].forEach(id=>{
@@ -366,7 +376,7 @@ function toggleBtns(show){
 }
 
 function downloadImage(){
-  const node = document.getElementById("output");
+  const node = document.getElementById("captureArea");
 
   html2canvas(node, {
     scale: 3,
@@ -384,7 +394,7 @@ function downloadImage(){
 }
 
 function shareImage(){
-  html2canvas(document.getElementById("output"), {
+  html2canvas(const node = document.getElementById("captureArea"), {
   scale: 3,
   useCORS: true,
   backgroundColor: "#000",
