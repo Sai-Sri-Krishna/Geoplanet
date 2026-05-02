@@ -102,6 +102,7 @@ button{padding:12px 16px;border-radius:8px;border:none;cursor:pointer;font-weigh
   margin-top: 30px;
   padding: 10px;
   padding-left: 10px;
+  padding-right: 10px;
   scroll-padding-left: 10px;
 }
 button:hover {
@@ -147,9 +148,22 @@ button:active {
   background: #444;
   color: #fff;
 }
+    #starfield{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background: #000;
+}
 
 .clear:hover {
   background: #666;
+}
+    .hero, nav, .footer {
+  position: relative;
+  z-index: 2;
 }
 .output img {
   width: clamp(30px, 8vw, 90px);
@@ -181,7 +195,7 @@ button:active {
 </style>
 </head>
 <body>
-
+<canvas id="starfield"></canvas>
 <nav>
   <div class="logo">GeoPlanet </div>
 </nav>
@@ -248,7 +262,65 @@ const map={
   4:["4.png"],5:["5.png"],6:["6.png"],7:["7.png"],
   8:["8.png"],9:["9.png"]
 };
+const canvas = document.getElementById("starfield");
+const ctx = canvas.getContext("2d");
 
+let stars = [];
+const STAR_COUNT = 180;
+
+function resize(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+function initStars(){
+  stars = [];
+  for(let i=0;i<STAR_COUNT;i++){
+    stars.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      z: Math.random() * canvas.width,
+      speed: 0.3 + Math.random() * 1.2
+    });
+  }
+}
+
+function animateStars(){
+  ctx.fillStyle = "#000";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  for(let s of stars){
+    s.z -= s.speed * 2;
+
+    if(s.z <= 0){
+      s.z = canvas.width;
+      s.x = Math.random() * canvas.width;
+      s.y = Math.random() * canvas.height;
+    }
+
+    const k = 128 / s.z;
+    const px = (s.x - canvas.width/2) * k + canvas.width/2;
+    const py = (s.y - canvas.height/2) * k + canvas.height/2;
+
+    const size = (1 - s.z / canvas.width) * 2.2;
+
+    ctx.fillStyle = "white";
+    ctx.beginPath();
+    ctx.arc(px, py, size, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  requestAnimationFrame(animateStars);
+}
+
+window.addEventListener("resize", () => {
+  resize();
+  initStars();
+});
+
+resize();
+initStars();
+animateStars();
 
 let glow;
 
