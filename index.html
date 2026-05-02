@@ -280,7 +280,7 @@ function render(input){
   if(map[c]){
     const img=document.createElement("img");
     img.src=rand(map[c]);
-    img.style.animationDelay=`${i*0.12}s`;
+    img.style.animationDelay = `0s`;
     img.onerror = () => img.remove();
     out.appendChild(img);
   }
