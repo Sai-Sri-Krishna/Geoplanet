@@ -135,39 +135,14 @@ button:active {
   background: #444;
   color: #fff;
 }
-#captureArea {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
 
-  padding: 12px;
-  background: #000;
-  border-radius: 16px;
-
-  box-shadow: 0 0 20px rgba(30,144,255,0.3);
-}
 .clear:hover {
   background: #666;
 }
 .output img {
   width: clamp(30px, 8vw, 90px);
   height: clamp(30px, 8vw, 90px);
-  margin: 3px;
-
-  border-radius: 5px;        
-  object-fit: cover;
-
-  transition: 
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    filter 0.25s ease;
-
-  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-}
-    .output img:hover {
-  transform: translateY(-6px) scale(1.08);
-  box-shadow: 0 12px 25px rgba(30,144,255,0.5);
-  filter: brightness(1.1);
+  margin:2px;
 }
     @media (max-width: 600px) {
   .output img {
@@ -180,10 +155,6 @@ button:active {
 .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;padding:40px 16px}
 .card{background:rgba(255,255,255,.05);padding:20px;border-radius:14px}
 .footer{text-align:center;padding:20px;opacity:.6;font-size:15px;color:#ffffff;}
-    .output img:active {
-  transform: scale(0.95);
-  box-shadow: 0 6px 15px rgba(30,144,255,0.4);
-}
 </style>
 </head>
 <body>
@@ -209,7 +180,7 @@ button:active {
     </div>
 
     <div id="output" class="output"></div>
-    <div id="captureArea"></div>
+
     <div style="margin-top:10px">
       <button class="download" id="downloadBtn" onclick="downloadImage()">Download</button>
       <button class="share" id="shareBtn" onclick="shareImage()">Share</button>
@@ -299,7 +270,7 @@ function clearAll(){
   history.replaceState(null, "", url);
 }
 function render(input){
-  const out = document.getElementById("captureArea");
+  const out = document.getElementById("output");
   out.innerHTML = '';
 
   const length = input.length;
@@ -376,7 +347,7 @@ function toggleBtns(show){
 }
 
 function downloadImage(){
-  const node = document.getElementById("captureArea");
+  const node = document.getElementById("output");
 
   html2canvas(node, {
     scale: 3,
@@ -394,7 +365,7 @@ function downloadImage(){
 }
 
 function shareImage(){
-  html2canvas(const node = document.getElementById("captureArea"), {
+  html2canvas(document.getElementById("output"), {
   scale: 3,
   useCORS: true,
   backgroundColor: "#000",
