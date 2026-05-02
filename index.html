@@ -26,7 +26,7 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:30px 3
   transform: translate(-50%, -50%);
   border-radius: 50%;
   z-index: 0;
-
+ overflow: hidden;
   background: url('eartt.png') repeat-x;
   background-size: cover;
 
@@ -34,17 +34,27 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:30px 3
     inset -40px -40px 80px rgba(0,0,0,0.7),
     0 0 80px rgba(70, 178, 255, 0.548);
 
-  animation: earthMove 18s linear infinite alternate;
-    softSpin 80s linear infinite;
-  will-change: transform;
+  
+  animation: earthMove 18s ease-in-out infinite alternate;
 }
+    .globe::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: url('eartt.png') repeat-x;
+  background-size: cover;
+  animation: softSpin 80s linear infinite;
+  opacity: 0.9;
+}
+
 
 @keyframes earthMove {
   0% {
-    transform: translate(-60%, -50%);
+    transform: translate(-50%, -50%) translateX(-60px);
   }
   100% {
-    transform: translate(-40%, -50%);
+    transform: translate(-50%, -50%) translateX(60px);
   }
 }
 @keyframes softSpin {
@@ -300,19 +310,21 @@ function initStars(){
 }
 
 function animateStars(){
+    ctx.shadowBlur = 0;
+ctx.shadowColor = "transparent";
   ctx.fillStyle = "#000";
   ctx.fillRect(0,0,canvas.width,canvas.height);
 
   const cx = canvas.width / 2;
   const cy = canvas.height / 2;
-
+ctx.globalAlpha = 0.9;
   for(let s of stars){
 
     // ✨ smoother warp motion (depth acceleration)
     s.z -= s.speed * (1 + s.z / canvas.width * 0.35);
 
     if (s.z <= 1) {
-      s.z = canvas.width;
+     s.z = Math.max(canvas.width, canvas.height);
       s.x = (Math.random() - 0.5) * canvas.width;
       s.y = (Math.random() - 0.5) * canvas.height;
     }
@@ -326,14 +338,15 @@ function animateStars(){
     // 🌟 glow boost (important upgrade)
     ctx.beginPath();
     ctx.fillStyle = "white";
-    ctx.shadowBlur = 6;
+    ctx.shadowBlur = 3;
     ctx.shadowColor = "rgba(255,255,255,0.6)";
     ctx.arc(px, py, size, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.shadowBlur = 0;
+    
   }
-
+ctx.globalAlpha = 1;
   requestAnimationFrame(animateStars);
 }
 
