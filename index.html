@@ -144,6 +144,12 @@ button:active {
   height: clamp(30px, 8vw, 90px);
   margin:2px;
 }
+    @media (max-width: 600px) {
+  .output img {
+    width: clamp(45px, 12vw, 80px);
+    height: clamp(45px, 12vw, 80px);
+  }
+}
 @keyframes pop{to{transform:scale(1)}}
 
 .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;padding:40px 16px}
@@ -263,29 +269,49 @@ function clearAll(){
   url.searchParams.delete("q");
   history.replaceState(null, "", url);
 }
-    
 function render(input){
-  const out=document.getElementById("output");
-  
-  out.innerHTML='';
-  input.split("").forEach((c,i)=>{
-  if(c === " "){
-    const spacer = document.createElement("div");
-  spacer.style.width = "clamp(10px, 2vw, 20px)";
-  spacer.style.height = "1px";
-    out.appendChild(spacer);
-    return;
+  const out = document.getElementById("output");
+  out.innerHTML = '';
+
+  const length = input.length;
+
+  // 🎯 dynamic sizing
+  let size;
+  if (window.innerWidth < 600) {
+    // mobile sizes
+    if (length <= 4) size = 80;
+    else if (length <= 8) size = 65;
+    else if (length <= 15) size = 50;
+    else size = 40;
+  } else {
+    // desktop sizes
+    if (length <= 4) size = 90;
+    else if (length <= 8) size = 70;
+    else if (length <= 15) size = 55;
+    else size = 45;
   }
 
-  if(map[c]){
-    const img=document.createElement("img");
-    img.src=rand(map[c]);
-    img.style.animationDelay = `0s`;
-    img.onerror = () => img.remove();
-    out.appendChild(img);
-  }
-});
-  
+  input.split("").forEach((c,i)=>{
+    if(c === " "){
+      const spacer = document.createElement("div");
+      spacer.style.width = "15px";
+      out.appendChild(spacer);
+      return;
+    }
+
+    if(map[c]){
+      const img = document.createElement("img");
+      img.src = rand(map[c]);
+
+      img.style.width = size + "px";
+      img.style.height = size + "px";
+
+      img.style.animationDelay = `${i * 0.1}s`;
+
+      img.onerror = () => img.remove();
+      out.appendChild(img);
+    }
+  });
 }
 
 function generate(){
