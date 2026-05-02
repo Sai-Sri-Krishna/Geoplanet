@@ -372,45 +372,68 @@ function toggleBtns(show){
 function downloadImage(){
   const node = document.getElementById("output");
 
-  html2canvas(node, {
+  const clone = node.cloneNode(true);
+
+  // temporarily force full width capture
+  clone.style.overflow = "visible";
+  clone.style.width = node.scrollWidth + "px";
+  clone.style.display = "flex";
+
+  document.body.appendChild(clone);
+
+  html2canvas(clone, {
     scale: 3,
     useCORS: true,
     backgroundColor: "#000",
-    scrollX: 0,
-    scrollY: -window.scrollY,
-    logging: false
+    width: clone.scrollWidth,
+    windowWidth: clone.scrollWidth
   }).then(canvas => {
     const a = document.createElement("a");
     a.download = "geoplanet.png";
     a.href = canvas.toDataURL("image/png");
     a.click();
+
+    document.body.removeChild(clone);
   });
 }
 
 function shareImage(){
-  html2canvas(document.getElementById("output"), {
-  scale: 3,
-  useCORS: true,
-  backgroundColor: "#000",
-  logging: false
-}).then(c=>{
-    c.toBlob(b=>{
-      const f=new File([b],"geoplanet.png",{type:"image/png"});
+  const node = document.getElementById("output");
 
-      if(navigator.share){
+  const clone = node.cloneNode(true);
+
+  // force full content rendering
+  clone.style.overflow = "visible";
+  clone.style.width = node.scrollWidth + "px";
+  clone.style.display = "flex";
+
+  document.body.appendChild(clone);
+
+  html2canvas(clone, {
+    scale: 3,
+    useCORS: true,
+    backgroundColor: "#000",
+    width: clone.scrollWidth,
+    windowWidth: clone.scrollWidth
+  }).then(canvas => {
+    canvas.toBlob(blob => {
+      const file = new File([blob], "geoplanet.png", { type: "image/png" });
+
+      if (navigator.share) {
         navigator.share({
-          title:"GeoPlanet 🌍",
-          text:"Check this out!",
-          files:[f]
+          title: "GeoPlanet 🌍",
+          text: "Check this out!",
+          files: [file]
         });
       } else {
-        // fallback
         const a = document.createElement("a");
-        a.href = URL.createObjectURL(b);
+        a.href = URL.createObjectURL(blob);
         a.download = "geoplanet.png";
         a.click();
-        alert("Downloaded instead (sharing not supported)");
+        alert("Sharing not supported, downloaded instead 🚀");
       }
+
+      document.body.removeChild(clone);
     });
   });
 }
