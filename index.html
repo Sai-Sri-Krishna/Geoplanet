@@ -141,8 +141,8 @@ button:active {
   align-items: center;
 
   padding: 12px;
-  background: #000;
-  border-radius: 16px;
+  min-height: 120px;
+  min-width: 120px;
 
   box-shadow: 0 0 20px rgba(30,144,255,0.3);
 }
@@ -210,12 +210,13 @@ button:active {
 
     <div id="output" class="output">
   <div id="captureArea"></div>
+</div>
     <div style="margin-top:10px">
       <button class="download" id="downloadBtn" onclick="downloadImage()">Download</button>
       <button class="share" id="shareBtn" onclick="shareImage()">Share</button>
       <button class="copy" id="copyBtn" onclick="copyLink()">Copy Link</button>
     </div>
-  </div>
+  
 </section>
 
 
@@ -394,14 +395,16 @@ function downloadImage(){
 }
 
 function shareImage(){
-  html2canvas(const node = document.getElementById("captureArea"), {
-  scale: 3,
-  useCORS: true,
-  backgroundColor: "#000",
-  logging: false
-}).then(c=>{
+  const node = document.getElementById("captureArea");
+
+  html2canvas(node, {
+    scale: 3,
+    useCORS: true,
+    backgroundColor: "#000",
+    logging: false
+  }).then(c=>{
     c.toBlob(b=>{
-      const f=new File([b],"geoplanet.png",{type:"image/png"});
+      const f = new File([b],"geoplanet.png",{type:"image/png"});
 
       if(navigator.share){
         navigator.share({
@@ -410,12 +413,10 @@ function shareImage(){
           files:[f]
         });
       } else {
-        // fallback
         const a = document.createElement("a");
         a.href = URL.createObjectURL(b);
         a.download = "geoplanet.png";
         a.click();
-        alert("Downloaded instead (sharing not supported)");
       }
     });
   });
