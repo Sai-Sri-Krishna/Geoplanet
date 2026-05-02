@@ -142,7 +142,22 @@ button:active {
 .output img {
   width: clamp(30px, 8vw, 90px);
   height: clamp(30px, 8vw, 90px);
-  margin:2px;
+  margin: 3px;
+
+  border-radius: 5px;        
+  object-fit: cover;
+
+  transition: 
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+    .output img:hover {
+  transform: translateY(-6px) scale(1.08);
+  box-shadow: 0 12px 25px rgba(30,144,255,0.5);
+  filter: brightness(1.1);
 }
     @media (max-width: 600px) {
   .output img {
@@ -155,6 +170,10 @@ button:active {
 .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;padding:40px 16px}
 .card{background:rgba(255,255,255,.05);padding:20px;border-radius:14px}
 .footer{text-align:center;padding:20px;opacity:.6;font-size:15px;color:#ffffff;}
+    .output img:active {
+  transform: scale(0.95);
+  box-shadow: 0 6px 15px rgba(30,144,255,0.4);
+}
 </style>
 </head>
 <body>
