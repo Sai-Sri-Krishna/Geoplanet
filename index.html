@@ -135,7 +135,17 @@ button:active {
   background: #444;
   color: #fff;
 }
+#captureArea {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 
+  padding: 12px;
+  background: #000;
+  border-radius: 16px;
+
+  box-shadow: 0 0 20px rgba(30,144,255,0.3);
+}
 .clear:hover {
   background: #666;
 }
@@ -199,7 +209,7 @@ button:active {
     </div>
 
     <div id="output" class="output"></div>
-
+    <div id="captureArea"></div>
     <div style="margin-top:10px">
       <button class="download" id="downloadBtn" onclick="downloadImage()">Download</button>
       <button class="share" id="shareBtn" onclick="shareImage()">Share</button>
@@ -289,7 +299,7 @@ function clearAll(){
   history.replaceState(null, "", url);
 }
 function render(input){
-  const out = document.getElementById("output");
+  const out = document.getElementById("captureArea");
   out.innerHTML = '';
 
   const length = input.length;
@@ -366,7 +376,7 @@ function toggleBtns(show){
 }
 
 function downloadImage(){
-  const node = document.getElementById("output");
+  const node = document.getElementById("captureArea");
 
   html2canvas(node, {
     scale: 3,
@@ -384,7 +394,7 @@ function downloadImage(){
 }
 
 function shareImage(){
-  html2canvas(document.getElementById("output"), {
+  html2canvas(const node = document.getElementById("captureArea"), {
   scale: 3,
   useCORS: true,
   backgroundColor: "#000",
