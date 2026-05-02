@@ -131,7 +131,14 @@ button:active {
 .download, .share, .copy {
   display: none;
 }
+.clear {
+  background: #444;
+  color: #fff;
+}
 
+.clear:hover {
+  background: #666;
+}
 .output img {
   width: clamp(30px, 8vw, 90px);
   height: clamp(30px, 8vw, 90px);
@@ -163,6 +170,7 @@ button:active {
     <div class="input-wrap">
       <input id="textInput" placeholder="Enter your name / 2026" maxlength="25"/>
       <button class="generate" onclick="generate()">Generate</button>
+        <button class="clear" onclick="clearAll()">Clear</button>
     </div>
 
     <div id="output" class="output"></div>
@@ -244,6 +252,18 @@ function rand(arr){
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
+function clearAll(){
+  document.getElementById("textInput").value = "";
+  document.getElementById("output").innerHTML = "";
+
+  toggleBtns(false);
+
+  // remove query param from URL
+  const url = new URL(window.location);
+  url.searchParams.delete("q");
+  history.replaceState(null, "", url);
+}
+    
 function render(input){
   const out=document.getElementById("output");
   
