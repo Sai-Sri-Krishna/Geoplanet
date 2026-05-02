@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" sizes="32x32" href="Screenshot 2026-05-01 204517.png">
+<link rel="icon" sizes="32x32" href="Screenshot 2026-05-01 204517.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GeoPlanet</title>
@@ -10,31 +10,57 @@
 
 <style>
 :root {
-  --primary:#1e90ff; --success:#28a745; --warning:#ff9800;
+  --primary:#1e90ff;
 }
-*{box-sizing:border-box}
-body{margin:0;font-family:'Segoe UI',sans-serif;background:radial-gradient(circle at top,#0f2027,#000);color:#fff}
-nav{display:flex;justify-content:space-between;align-items:center;padding:30px 32px;position:relative;z-index:2}
-.logo{font-weight:700;font-size:19px;color:var(--primary)}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at top,#0f2027,#000);
+  color: #fff;
+}
+
+nav {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:30px;
+}
+
+.logo {
+  font-weight:700;
+  font-size:19px;
+  color:var(--primary);
+}
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
 
 .globe {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: min(90vw, 600px);
-height: min(90vw, 600px);
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  z-index: 0;
-
-  background: url('eartt.png') repeat-x;
-  background-size: cover;
-
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:min(90vw,600px);
+  height:min(90vw,600px);
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:url('eartt.png') repeat-x;
+  background-size:cover;
   box-shadow:
     inset -40px -40px 80px rgba(0,0,0,0.7),
-    0 0 80px rgba(70, 178, 255, 0.548);
-
+    0 0 80px rgba(70,178,255,0.5);
   animation: rotateEarth 40s linear infinite;
+  z-index:0;
 }
 
 @keyframes rotateEarth {
@@ -42,159 +68,122 @@ height: min(90vw, 600px);
   to { background-position: 1000px 0; }
 }
 
-
-.hero {
-  position: relative;
-  overflow: hidden;
-
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.cursor-glow {
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(0, 149, 255, 0.25), transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  z-index: 1;
-}
 .hero-content {
-  position: relative;
-  z-index: 2;
-
-  width: 100%;
-  max-width: 900px; 
-  margin: 0 auto;
-  text-align: center;
-}
-.hero-content > div:last-child {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-}
-.hero h1{font-size:clamp(1.8rem,5vw,3rem);margin:0 0 12px}
-.hero p{opacity:.8;margin:0 0 18px}
-.input-wrap{display:flex;justify-content:center;flex-wrap:wrap;gap:10px}
-input{padding:12px;max-width:260px;width:100%;border-radius:8px;border:none}
-button{padding:12px 16px;border-radius:8px;border:none;cursor:pointer;font-weight:700}
-.generate{background:var(--primary)}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  z-index: 1;
-}
-.output {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  flex-wrap: nowrap;
-
-  max-width: 100%;
-  overflow-x: auto;
-
-  margin-top: 30px;
-  padding: 10px;
-}
-button:hover {
-  filter: brightness(1.1);
-}
-input:focus {
-  outline: none;
-  box-shadow: 0 0 10px rgba(30,144,255,0.6);
-}
-.hero h1, .hero p {
-  text-align: center;
-  width: 100%;
-}
-#output {
-  width: 100%;
-  max-width: 100%;
-}
-.output::-webkit-scrollbar {
-  display: none;
-}input {
-  flex: 1;
+  position:relative;
+  z-index:2;
+  text-align:center;
+  width:100%;
+  max-width:900px;
 }
 
-button:active {
-  transform: scale(0.95);
+.input-wrap {
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:10px;
 }
 
-.download, .share, .copy {
-  display: none;
+input {
+  padding:12px;
+  border-radius:8px;
+  border:none;
+  max-width:260px;
+  width:100%;
 }
+
+button {
+  padding:12px 16px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:700;
+}
+
+.generate {
+  background:var(--primary);
+  color:#fff;
+}
+
 .clear {
-  background: #444;
-  color: #fff;
+  background:#444;
+  color:#fff;
 }
 
 .clear:hover {
-  background: #666;
+  background:#666;
 }
-.output img {
-  width: clamp(30px, 8vw, 90px);
-  height: clamp(30px, 8vw, 90px);
-  margin:2px;
-}
-    @media (max-width: 600px) {
-  .output img {
-    width: clamp(45px, 12vw, 80px);
-    height: clamp(45px, 12vw, 80px);
-  }
-}
-@keyframes pop{to{transform:scale(1)}}
 
-.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;padding:40px 16px}
-.card{background:rgba(255,255,255,.05);padding:20px;border-radius:14px}
-.footer{text-align:center;padding:20px;opacity:.6;font-size:15px;color:#ffffff;}
+.output {
+  margin-top:25px;
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:4px;
+  padding:10px;
+}
+
+.output img {
+  width: clamp(35px, 8vw, 85px);
+  height: clamp(35px, 8vw, 85px);
+  margin:2px;
+  object-fit:cover;
+  transition:0.2s;
+}
+
+.output img:hover {
+  transform: scale(1.1);
+}
+
+.download,.share,.copy {
+  display:none;
+  margin-top:10px;
+}
+
+.footer {
+  text-align:center;
+  padding:20px;
+  opacity:.6;
+}
 </style>
 </head>
+
 <body>
 
 <nav>
-  <div class="logo">GeoPlanet </div>
+  <div class="logo">GeoPlanet</div>
 </nav>
-   
+
 <section class="hero">
-
-
-
   <div class="globe"></div>
-<div class="cursor-glow"></div>
+
   <div class="hero-content">
+
     <h1>See Your Name Written by Earth</h1>
     <p>Generate satellite-style names & numbers instantly</p>
 
     <div class="input-wrap">
       <input id="textInput" placeholder="Enter your name / 2026" maxlength="25"/>
       <button class="generate" onclick="generate()">Generate</button>
-        <button class="clear" onclick="clearAll()">Clear</button>
+      <button class="clear" onclick="clearAll()">Clear</button>
     </div>
 
     <div id="output" class="output"></div>
 
-    <div style="margin-top:10px">
+    <div>
       <button class="download" id="downloadBtn" onclick="downloadImage()">Download</button>
       <button class="share" id="shareBtn" onclick="shareImage()">Share</button>
       <button class="copy" id="copyBtn" onclick="copyLink()">Copy Link</button>
     </div>
+
   </div>
 </section>
-
-
 
 <div class="footer">Crafted by VVNSSK 🌍</div>
 
 <script>
-const map={
+
+const map = {
   A:["a-0.png","a-1.png","a-2.png","a-3.png"],
   B:["b-1.png"],
   C:["c-2.png"],
@@ -226,97 +215,36 @@ const map={
   8:["8.png"],9:["9.png"]
 };
 
-
-let glow;
-
-window.onload = () => {
-  glow = document.querySelector(".cursor-glow");
-  document.getElementById("textInput").addEventListener("keypress", function(e) {
-  if (e.key === "Enter") generate();
-});
-toggleBtns(false);
-  animateGlow();
-};
-let mouseX = 0, mouseY = 0;
-
-document.addEventListener("mousemove", (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-});
-
-
-function animateGlow(){
-if(!glow) return requestAnimationFrame(animateGlow);
-  glow.style.left = mouseX + "px";
-  glow.style.top = mouseY + "px";
-  requestAnimationFrame(animateGlow);
-}
-
-
-
 function rand(arr){
-  return arr[Math.floor(Math.random() * arr.length)];
+  return arr[Math.floor(Math.random()*arr.length)];
 }
 
-function clearAll(){
-  document.getElementById("textInput").value = "";
-  document.getElementById("output").innerHTML = "";
-
-  toggleBtns(false);
-
-  // remove query param from URL
-  const url = new URL(window.location);
-  url.searchParams.delete("q");
-  history.replaceState(null, "", url);
-}
 function render(input){
   const out = document.getElementById("output");
-  out.innerHTML = '';
+  out.innerHTML = "";
 
-  const length = input.length;
+  let size = window.innerWidth < 600 ? 60 : 80;
 
-  // 🎯 dynamic sizing
-  let size;
-  if (window.innerWidth < 600) {
-    // mobile sizes
-    if (length <= 4) size = 80;
-    else if (length <= 8) size = 65;
-    else if (length <= 15) size = 50;
-    else size = 40;
-  } else {
-    // desktop sizes
-    if (length <= 4) size = 90;
-    else if (length <= 8) size = 70;
-    else if (length <= 15) size = 55;
-    else size = 45;
-  }
-
-  input.split("").forEach((c,i)=>{
-    if(c === " "){
-      const spacer = document.createElement("div");
-      spacer.style.width = "15px";
-      out.appendChild(spacer);
+  input.split("").forEach(c=>{
+    if(c === " ") {
+      const sp = document.createElement("div");
+      sp.style.width = "15px";
+      out.appendChild(sp);
       return;
     }
 
     if(map[c]){
       const img = document.createElement("img");
       img.src = rand(map[c]);
-
       img.style.width = size + "px";
       img.style.height = size + "px";
-
-      img.style.animationDelay = `${i * 0.1}s`;
-
-      img.onerror = () => img.remove();
       out.appendChild(img);
     }
   });
 }
 
 function generate(){
-  const input=document.getElementById("textInput").value.trim().toUpperCase();
-
+  const input = document.getElementById("textInput").value.trim().toUpperCase();
   if(!input) return;
 
   if(input.length > 25){
@@ -324,96 +252,67 @@ function generate(){
     return;
   }
 
-  const out = document.getElementById("output");
-  out.innerHTML = "<p style='opacity:0.6'>Generating...</p>";
+  document.getElementById("output").innerHTML = "<p>Generating...</p>";
 
   setTimeout(()=>{
     render(input);
-
-    requestAnimationFrame(() => {
-      out.scrollLeft = (out.scrollWidth - out.clientWidth) / 2;
-    });
-
     toggleBtns(true);
     updateURL(input);
   }, 200);
 }
 
+function clearAll(){
+  document.getElementById("textInput").value="";
+  document.getElementById("output").innerHTML="";
+  toggleBtns(false);
+}
 
 function toggleBtns(show){
   ["downloadBtn","shareBtn","copyBtn"].forEach(id=>{
-    document.getElementById(id).style.display=show?"inline-block":"none";
+    document.getElementById(id).style.display = show ? "inline-block" : "none";
   });
 }
 
 function downloadImage(){
-  const node = document.getElementById("output");
-
-  html2canvas(node, {
-    scale: 3,
-    useCORS: true,
-    backgroundColor: "#000",
-    scrollX: 0,
-    scrollY: -window.scrollY,
-    logging: false
-  }).then(canvas => {
-    const a = document.createElement("a");
-    a.download = "geoplanet.png";
-    a.href = canvas.toDataURL("image/png");
+  html2canvas(document.getElementById("output"), {
+    scale:3,
+    backgroundColor:"#000"
+  }).then(canvas=>{
+    const a=document.createElement("a");
+    a.download="geoplanet.png";
+    a.href=canvas.toDataURL();
     a.click();
   });
 }
 
 function shareImage(){
   html2canvas(document.getElementById("output"), {
-  scale: 3,
-  useCORS: true,
-  backgroundColor: "#000",
-  logging: false
-}).then(c=>{
-    c.toBlob(b=>{
-      const f=new File([b],"geoplanet.png",{type:"image/png"});
+    scale:3,
+    backgroundColor:"#000"
+  }).then(canvas=>{
+    canvas.toBlob(blob=>{
+      const file=new File([blob],"geoplanet.png",{type:"image/png"});
 
       if(navigator.share){
         navigator.share({
-          title:"GeoPlanet 🌍",
-          text:"Check this out!",
-          files:[f]
+          title:"GeoPlanet",
+          files:[file]
         });
-      } else {
-        // fallback
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(b);
-        a.download = "geoplanet.png";
-        a.click();
-        alert("Downloaded instead (sharing not supported)");
       }
     });
   });
 }
 
-// shareable URL
 function updateURL(text){
   const url=new URL(window.location);
   url.searchParams.set("q",text);
   history.replaceState(null,"",url);
 }
 
-function loadFromURL(){
-  const p=new URLSearchParams(window.location.search);
-  const q=p.get("q");
-  if(q){
-    document.getElementById("textInput").value=q;
-    generate();
-  }
-}
-
 function copyLink(){
   navigator.clipboard.writeText(window.location.href);
   alert("Link copied!");
 }
-
-loadFromURL();
 
 </script>
 
